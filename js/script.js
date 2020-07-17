@@ -1,5 +1,13 @@
 'use strict';
 
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+  authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
+  tagCloud: Handlebars.compile(document.querySelector('#template-tag-cloud').innerHTML),
+  authorCloud: Handlebars.compile(document.querySelector('#template-author-cloud').innerHTML)
+};
+
 function titleClickHandler(event){
     event.preventDefault();
     const clickedElement = this;
@@ -50,7 +58,8 @@ function generateTitleLinks(){
   console.log('linkHTML:', linkHTML);
 
   /* get the title from the title element */
- const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+  const linkHTMLData = {id: articleId, title: articleTitle};
+  const linkHTML = templates.articleLink(linkHTMLData);
 
   /* create HTML of the link */
   titleList.innerHTML = titleList.innerHTML + linkHTML;
@@ -100,7 +109,7 @@ function generateTags(){
           className: calculateTagClass(allTags[tag], tagsParams)
         });
       }
-    tagList.innerHTML = templates.tagCloud(allTagsData);    
+    tagList.innerHTML = templates.tagCloudLink(allTagsData);   
   }
 }
 
