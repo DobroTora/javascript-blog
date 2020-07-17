@@ -104,6 +104,16 @@ function generateTags(){
   }
 }
 
+function calculateTagClass(count, params){     
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
+  return classNumber;
+}
+
+generateTags();
+
   tagList.innerHTML = allTagsHTML;
 
   function tagClickHandler(event){
